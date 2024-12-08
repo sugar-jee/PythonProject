@@ -1,39 +1,29 @@
+# Password Manager with CSV Storage
+# Allow users to add, retrieve, update, delete, 
+# and generate new passwords using a command line interface and store in a CSV
+import csv
+import re
 
-csvfilepath = 'Recorded_URLs.csv'
-uccsvfilepath = 'Known_UC_URLs.csv'
-results = [url_id, malicious_count, suspicious_count, undetected_count, harmless_count]
+csvfilepath = 'Passwords.csv' 
+passwordgen_regex = re.compile(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$') 
 
-#def checks to see if the URL ID exists in a file
-def check_URL(file_path, url_id):
-    if os.path.isfile(file_path):
-        with open(file_path, mode='r', newline='') as file:
-            csv_reader = csv.reader(file)
-            for row in csv_reader:
-                if url_id in row:
-                    print(f"URL ID FOUND")
-                    return True
-    return False
+# def for creating the csvfile if it doesn't exist yet
+def create_csv(): 
+    with open(csvfilepath, 'a', newline='') as file: 
+        writer = csv.writer(file) 
+        writer.writerow(['Website', 'Username', 'Password'])
 
-#def appends a URL to the recorded_urls file and creates one if not found + add headers
-def append_URL(csvfilepath, results):
-    file_exists = os.path.isfile(csvfilepath)
-    with open(csvfilepath, 'a', newline='') as file:
-        csv_writer = csv.writer(file)
-        if not file_exists:
-            csv_writer.writerow(['URL ID', 'Malicious Count', 'Suspicious Count', 'Undetected Count', 'Harmless Count'])
-        print(f"Appending URL")
-        csv_writer.writerow(results)
+# def for adding passwords
+def add_password():
 
-#def that will process URL
-def process_url_id(url_id, uccsvfilepath, csvfilepath):
-    print(f"processing URL ID: ", url_id)
-    if check_URL(uccsvfilepath, url_id):
-        print(f"URL found in UC URLs File")
-    elif check_URL(csvfilepath, url_id):
-        print(f"URL found in Recorded URLs File")
-    else:
-        append_URL(csvfilepath, results)
-        print(f"URL appended to CSV File")
+# def for retrieving a password 
+def retrieve_password():
 
-#actually run the process
-process_url_id(url_id, uccsvfilepath, csvfilepath)
+# def for updating a password
+def update_password():
+
+# def for deleting a password
+def delete_password():
+
+#def for generating a password
+def generate_password():
